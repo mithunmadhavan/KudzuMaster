@@ -14,17 +14,12 @@ class App extends React.Component {
   checkTaste = taste => {
     const { countrySelected } = this.state
 
-    if (countrySelected == 'USA') {
-      if (taste == 'Salty')
-        return alert('Taste available')
-      else
-        return alert('Taste not available')
-    } else if (countrySelected == 'INDIA') {
-      if (taste === 'Spicy')
-        return alert('Taste available')
-      else
-        return alert('Taste not available')
-    }
+    if (countrySelected == 'USA' && taste == 'Salty')
+      return alert('40% Perple like Salty food in USA')
+    else if (countrySelected == 'INDIA' && taste === 'Spicy')
+      return alert('60% Perple like Spicy food in USA')
+    else
+      return alert('Taste not available')
   }
 
   render() {
