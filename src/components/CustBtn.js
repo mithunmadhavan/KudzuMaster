@@ -6,7 +6,7 @@ export default CustBtn = props => {
     return (
         <View style={[styles.container, containerStyle]}>
             <TouchableOpacity
-                onPress={() => onPress(value)}
+                onPress={() => onPress ? onPress(value) : null}
                 style={[styles.btn, (isSelected ? styles.selectedBtn : styles.deSelectedBtn)]}
             >
                 <Text style={styles.txt}>{label}</Text>
