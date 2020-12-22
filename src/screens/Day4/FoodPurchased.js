@@ -13,7 +13,7 @@ export default class FoodPurchased extends Component {
     }
 
     componentDidMount = () => {
-        const { foodPurchaseList } = this.props
+        const { foodPurchaseList = [] } = this.props.route.params
         this.setState({ foodPurchaseList })
     }
 
@@ -32,7 +32,6 @@ export default class FoodPurchased extends Component {
                         ))}
                     </View>
                 </View>
-                <Button containerStyle={styles.btn} label={'Return'} onPress={this.props.onReturn} />
             </View>
         )
     }

@@ -49,9 +49,10 @@ export default class FoodList extends Component {
         this.setState({ foodList, foodPurchaseList })
     }
 
-    onPurchase = () => this.setState({ viewOrderConfirmation: true })
-
-    childReturn = () => this.setState({ viewOrderConfirmation: false })
+    onPurchase = () => {
+        const { foodPurchaseList } = this.state
+        this.props.navigation.navigate('OrderSummary', { foodPurchaseList })
+    }
 
     render() {
 
@@ -59,20 +60,16 @@ export default class FoodList extends Component {
 
         return (
             <View style={styles.container}>
-                {viewOrderConfirmation
-                    ? <FoodPurchased foodPurchaseList={foodPurchaseList} onReturn={this.childReturn} />
-                    : <>
-                        <FlatList
-                            style={styles.list}
-                            data={foodList}
-                            keyExtractor={(item, index) => index}
-                            onRefresh={() => this._getData()}
-                            refreshing={isRefreshing}
-                            ListEmptyComponent={this._renderEmpty}
-                            renderItem={({ item, index }) => <FoodCard image={food_image} name={item.name} taste={item.taste} price={item.price} onPress={() => this.onSelect(index, item.isSelected)} isSelected={item.isSelected} />}
-                        />
-                        <Button label={'Buy'} onPress={this.onPurchase} />
-                    </>}
+                <FlatList
+                    style={styles.list}
+                    data={foodList}
+                    keyExtractor={(item, index) => index}
+                    onRefresh={() => this._getData()}
+                    refreshing={isRefreshing}
+                    ListEmptyComponent={this._renderEmpty}
+                    renderItem={({ item, index }) => <FoodCard image={food_image} name={item.name} taste={item.taste} price={item.price} onPress={() => this.onSelect(index, item.isSelected)} isSelected={item.isSelected} />}
+                />
+                <Button label={'Buy'} onPress={this.onPurchase} />
             </View>
         )
     }
