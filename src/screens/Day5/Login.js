@@ -34,7 +34,7 @@ export default function Login(props) {
                 <View style={[styles.container, {flex: 0.4}]}>
                     <Text style={{fontSize: 35}}>LOGIN !!!</Text>
                 </View>
-                <View style={styles.container}>
+                <View style={[styles.container, styles.formContainer]}>
                     <TextBox
                         onChangeText={value => changeName(value)}
                         value={name}
@@ -59,10 +59,8 @@ export default function Login(props) {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 0.5,
         justifyContent: 'center',
-        // marginTop: deviceHeight/4,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     btn: {
         width: '70%',
@@ -70,6 +68,13 @@ const styles = StyleSheet.create({
     txtBox: {
         height: 40,
         borderColor: 'gray',
-        borderWidth: 1
+        borderWidth: 1,
+    },
+    formContainer:{
+        backgroundColor: 'white',
+        padding: 20,
+        width: '80%',
+        alignSelf: 'center',
+        borderRadius: 10,        
     }
 })
