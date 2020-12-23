@@ -3,28 +3,38 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import FoodCard from '../../components/CustCards'
 import Button from '../../components/CustBtn';
-import FoodPurchased from './FoodPurchased';
 
+import services from '../../services'
 import food_image from '../../assets/images/food_image.jpeg'
 
-const foodData = [
-    { id: 1, name: 'Food 1', price: '200', taste: 'Salty', image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb' },
-    { id: 2, name: 'Food 2', price: '100', taste: 'Spicy', image: 'https://res.cloudinary.com/grohealth/image/upload/c_fill,f_auto,fl_lossy,h_650,q_auto,w_1085,x_0,y_0/v1583843120/DCUK/Content/Surprisingly-High-Carb-Food.png' },
-    { id: 3, name: 'Food 3', price: '500', taste: 'Sweet', image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb' },
-    { id: 4, name: 'Food 4', price: '400', taste: 'Spicy', image: 'https://res.cloudinary.com/grohealth/image/upload/c_fill,f_auto,fl_lossy,h_650,q_auto,w_1085,x_0,y_0/v1583843120/DCUK/Content/Surprisingly-High-Carb-Food.png' },
-    { id: 5, name: 'Food 5', price: '150', taste: 'Sweet', image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb' },
-]
+const foodData = []
 
 export default class FoodList extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            foodList: [],
+            foodList: foodData,
             isRefreshing: false,
             viewOrderConfirmation: false,
             foodPurchaseList: [],
         }
+    }
+
+    componentDidMount = () => {
+        this.getFoodList()
+    }
+
+    getFoodList = () => {
+        services.sampleApi.sampleApi()
+            .then(response => {
+                console.log(`res`, response)
+                if(response && response.meals){
+                    this.setState({
+                        foodList: response.meals || []
+                    })
+                }
+            }).catch(error => console.log(`error`, error))
     }
 
     _renderEmpty = () => (
@@ -32,10 +42,6 @@ export default class FoodList extends Component {
             <Text> {'No list'} </Text>
         </View>
     )
-
-    _getData = () => {
-        this.setState({ isRefreshing: false, foodList: foodData })
-    }
 
     onSelect = (index, isSelected) => {
         let foodList = this.state.foodList
@@ -64,10 +70,10 @@ export default class FoodList extends Component {
                     style={styles.list}
                     data={foodList}
                     keyExtractor={(item, index) => index}
-                    onRefresh={() => this._getData()}
+                    onRefresh={() => this.getFoodList()}
                     refreshing={isRefreshing}
                     ListEmptyComponent={this._renderEmpty}
-                    renderItem={({ item, index }) => <FoodCard image={food_image} name={item.name} taste={item.taste} price={item.price} onPress={() => this.onSelect(index, item.isSelected)} isSelected={item.isSelected} />}
+                    renderItem={({ item, index }) => <FoodCard image={food_image} name={item.strMeal} price={item.idMeal} onPress={() => this.onSelect(index, item.isSelected)} isSelected={item.isSelected} />}
                 />
                 <Button label={'Buy'} onPress={this.onPurchase} />
             </View>

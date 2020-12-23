@@ -21,17 +21,15 @@ export default class FoodPurchased extends Component {
         const { foodPurchaseList } = this.state
         return (
             <View style={styles.container}>
-                <View>
                     <Text style={styles.headerTxt}> Order Confirmed!!! </Text>
-                    <View>
+                    <View style={{flex: 1}}>
                         {foodPurchaseList.map(food => (
                             <View style={styles.list}>
-                                <Text >{food.name}</Text>
-                                <Text >{food.price}</Text>
+                                <Text style={styles.txt}>{food.strMeal.substring(0, 20)}</Text>
+                                <Text style={styles.txt}>{food.idMeal}</Text>
                             </View>
                         ))}
                     </View>
-                </View>
             </View>
         )
     }
@@ -41,22 +39,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 10
     },
     headerTxt: {
+        alignSelf: 'center',
         fontSize: 20,
         marginVertical: 20,
-    },
-    listContainer: {
-        marginHorizontal: 20,
     },
     list: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
     },
-    btn: {
-        position: 'absolute',
-        bottom: 0,
-        width: '80%'
+    txt: {
     }
 })
